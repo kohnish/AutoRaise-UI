@@ -942,7 +942,7 @@ void onTick() {
             CGEventRef _keyDownEvent = CGEventCreateKeyboardEvent(NULL, 0, true);
             CGEventFlags flags = CGEventGetFlags(_keyDownEvent);
             if (_keyDownEvent) { CFRelease(_keyDownEvent); }
-            abort = (flags & kCGEventFlagMaskControl) == kCGEventFlagMaskControl;
+            abort = (flags & kCGEventFlagMaskCommand) == kCGEventFlagMaskCommand || (flags & kCGEventFlagMaskAlternate) == kCGEventFlagMaskAlternate || (flags & kCGEventFlagMaskControl) == kCGEventFlagMaskControl;
         }
 
         if (abort) {

@@ -31,16 +31,23 @@ There is no installer or pre-built binary being distributed via Github but AutoR
 This installs the menubar app bundle (which includes a copy of the upstream AutoRaise cli binary) into your Applications folder and symlinks the cli into the Path, usually into `/opt/local/bin`
 
 ## Building from source
+```
+# Get ruby
+port install ruby32
 
-Simply clone, open and build this project in XCode. 
+# Install ruby gem and get cocoapods
+curl -L -O https://github.com/rubygems/rubygems/archive/refs/tags/v3.4.1.zip
+unzip v3.4.1.zip
+ruby-3.2 rubygems-3.4.1/setup.rb --prefix=$HOME/opt/rubygems
+~/opt/rubygems/bin/gem install cocoapods --user
+~/.gem/ruby/3.2.0/bin/pod install
 
-Like upstream XCode will first build the AutoRaise binary by running
+# Build
+xcodebuild -scheme AutoRaise -workspace AutoRaise.xcworkspace
 
-`g++ -O2 -Wall -fobjc-arc -D"NS_FORMAT_ARGUMENT(A)=" -DSKYLIGHT_AVAILABLE=1 -DEXPERIMENTAL_FOCUS_FIRST -DALTERNATIVE_TASK_SWITCHER -DOLD_ACTIVATION_METHOD -o AutoRaise AutoRaise.mm -framework AppKit -F /System/Library/PrivateFrameworks -framework SkyLight`
-
-and include it when finally building the Launcher app bundle (AutoRaise.app).
-
-To install copy AutoRaise.app into the `/Applications` folder and/or the AutoRaise binary to e.g. `/usr/local/bin`
+# Install
+cp -rp $HOME/Library/Developer/Xcode/DerivedData/AutoRaise-bipxafeozuclxaamwveyrwjaypux/Build/Products/Release/AutoRaise.app /Applications/AutoRaise.app
+```
 
 ## Running & Configuring
 
@@ -48,3 +55,4 @@ Open AutoRaise.app and click on the menubar icon to enable/disable AutoRaise wit
 On first launch you should be prompted to grant access for AutoRaise in _System Preferences > Security & Privacy > Privacy > Accessibility_.
 
 More options to run and configure AutoRaise are explained in the upstream project's Readme.
+
